@@ -4,7 +4,7 @@
 
 1. [Overview](#overview)
 2. [RAG Work Flow](#RAG-Work-Flow)
-3. [Repository Structure](#repository-structure)
+3. [Fine-tuning LLM](#Fine-tuning-LLM)
 
 ---
 
@@ -16,9 +16,30 @@ This repository is dedicated to advanced LLM engineering with a focus on Retriev
 
 ## RAG Work Flow
 
-- **Retrieval-Enhanced Responses**: Fetches context from external sources (e.g., a vector database or embeddings store) before generating replies.
-- **Modular Architecture**: Easy to plug in different retrieval backends or swap out the language model.
-- **Scalable Deployment**: Works on local machines or in cloud environments such as Google Colab Pro/Pro+.
-- **Customizable Knowledge Base**: Supports adding your own dataset or domain-specific documents.
+**RAG Flow** is designed to address one of the primary challenges of standalone LLMs: factual inaccuracy and context limitations. By augmenting generation with relevant, retrieved information, RAG Flow can:
+
+- **Improve Accuracy:** Incorporate up-to-date external data during inference.
+- **Enhance Contextual Relevance:** Use retrieved documents to ground responses in a broader context.
+- **Enable Domain Adaptability:** Easily switch or update the knowledge base for specific applications.
+
+**RAG Flow** is composed of two main modules:
+
+1. **Retrieval Module**
+   - **Input:** User query.
+   - **Process:** Searches an external knowledge base (e.g., a vector database using FAISS or Elasticsearch) for documents relevant to the query.
+   - **Output:** A set of context documents or passages.
+
+2. **Generation Module**
+   - **Input:** Combines the original query with the retrieved context.
+   - **Process:** Feeds the enriched input into a language model (e.g., an LLM like LLAMA or GPT) to generate a coherent, contextually informed response.
+   - **Output:** The final generated answer.
+
+To run the inference code of RAG, just open ```RAG_Reranking_LLAMA.ipynb``` in Google Colab Pro/Pro+ then run every cell followed by the instruction
+
+---
+
+## Fine-tuning LLM
+
+Coming soon
 
 ---
