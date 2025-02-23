@@ -26,7 +26,7 @@ This repository is dedicated to advanced LLM engineering with a focus on Retriev
 
 1. **Retrieval Module**
    - **Input:** User query.
-   - **Process:** Searches an external knowledge base (e.g., a vector database using FAISS or Elasticsearch) for documents relevant to the query.
+   - **Process:** Searches an external knowledge base (e.g., a vector database using FAISS or ChromaDB) for documents relevant to the query.
    - **Output:** A set of context documents or passages.
 
 2. **Generation Module**
