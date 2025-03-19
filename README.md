@@ -11,7 +11,7 @@ LLM-Engineering is a repository dedicated to advanced engineering techniques for
 - [RAG Work Flow](#rag-work-flow)
 - [Fine-tuning](#fine-tuning)
 - [Future Work](#future-work)
-- [About](#about)
+- [Author](#author)
 
 ## Overview
 
@@ -81,6 +81,6 @@ Planned future enhancements include:
 - Developing additional notebooks and scripts to support running the RAG pipeline on local environments.
 - Integrating further evaluation metrics and optimization techniques to improve both RAG and fine-tuning performance.
 
-## About
+## Author
 
 LLM-Engineering is maintained by [Hung369](https://github.com/Hung369). For issues, suggestions, or contributions, please open an issue in the repository or reach out directly via GitHub.
