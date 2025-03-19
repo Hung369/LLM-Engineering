@@ -78,7 +78,6 @@ This repository also explores fine-tuning strategies to adapt large language mod
 ## Future Work
 
 Planned future enhancements include:
-- Expanding the fine-tuning section with more detailed QLoRA examples and other methodologies.
 - Developing additional notebooks and scripts to support running the RAG pipeline on local environments.
 - Integrating further evaluation metrics and optimization techniques to improve both RAG and fine-tuning performance.
 
