@@ -51,7 +51,7 @@ The project is designed to run on Google Colab for ease of access and GPU suppor
 ## Repository Structure
 
 - **RAG_Reranking_LLAMA.ipynb:** Notebook demonstrating the RAG work flow using the LLAMA model.
-- **QLoRA.ipynb:** Notebook focused on fine-tuning techniques, including QLoRA (content may be updated soon).
+- **QLoRA.ipynb:** Notebook focused on fine-tuning techniques on supervised learning text summarization.
 - **README.md:** This file, providing an overview and guidance for the repository.
 
 ## RAG Work Flow
