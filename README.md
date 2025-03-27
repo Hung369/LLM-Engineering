@@ -38,8 +38,8 @@ The system consists of two main components:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/stark-pdf-assistant.git
-   cd stark-pdf-assistant
+   git clone https://github.com/Hung369/LLM-Engineering.git
+   cd LLM-Engineering/src
    ```
 
 2. Install the required packages:
