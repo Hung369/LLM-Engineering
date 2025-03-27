@@ -1,86 +1,179 @@
-# LLM-Engineering
+# Stark PDF Assistant
 
-LLM-Engineering is a repository dedicated to advanced engineering techniques for large language models. The project focuses on improving LLM performance through strategies like Retrieval-Augmented Generation (RAG) and fine-tuning. By combining external knowledge sources and custom training approaches, the project delivers robust, context-aware, and domain-adaptable language model applications.
+Stark is an intelligent Telegram bot that leverages LLaMA models and hierarchical RAG (Retrieval-Augmented Generation) to answer questions about PDF documents with precise references.
 
-## Table of Contents
+## Features
 
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [How to Run on Google Colab](#how-to-run-on-google-colab)
-- [Repository Structure](#repository-structure)
-- [RAG Work Flow](#rag-work-flow)
-- [Fine-tuning](#fine-tuning)
-- [Future Work](#future-work)
-- [Author](#author)
+- **PDF Document Management**: Upload, list, and manage PDF documents
+- **Hierarchical RAG**: Advanced retrieval system that organizes document content into pages, sections, and chunks
+- **Context-Aware Answers**: Responses include document name, page number, and section references
+- **Admin Controls**: Special commands for administrators to manage the knowledge base
+- **Fallback Mechanisms**: Robust error handling with multiple query processing methods
 
-## Overview
+## Architecture
 
-Standalone language models often struggle with issues like factual inaccuracies and limited context. LLM-Engineering addresses these challenges by integrating external data sources and employing innovative fine-tuning techniques. This repository showcases two primary approaches:
-- **Retrieval-Augmented Generation (RAG):** Combines user queries with relevant external documents to enhance response accuracy.
-- **Fine-tuning:** Utilizes advanced methods, including techniques like QLoRA, to adapt large models to specific tasks while reducing computational demands.
+The system consists of two main components:
 
-## Prerequisites
+1. **LlamaBot (Stark.py)**: Core RAG engine that handles:
+   - PDF document loading and hierarchical chunking
+   - Vector embedding and retrieval using FAISS
+   - Ollama integration for embedding and query processing
+   - Fallback mechanisms (keyword search when embeddings fail)
+   - Document hierarchy management
+   
+2. **Telegram Bot (main.py)**: User interface that provides:
+   - Command handling for document management
+   - Conversation flows for PDF uploads
+   - User session management
+   - Admin privilege controls
 
-Before running the notebooks, ensure you have:
-- A Google account to access Google Colab.
-- A Colab runtime configured to use a GPU for improved performance.
-- Basic knowledge of Python and Jupyter notebooks.
-- Familiarity with large language models and fine-tuning concepts.
+## Requirements
 
-## How to Run on Google Colab
+- Python 3.8+
+- [Ollama](https://ollama.ai/) with LLaMA models
+- Telegram Bot Token
+- Required Python packages (see Installation)
 
-The project is designed to run on Google Colab for ease of access and GPU support:
+## Installation
 
-1. **Open the Notebook:**
-   - Navigate to the repository on GitHub.
-   - Open the notebook file in your browser.
-   - Click the **"Open in Colab"** button (if available) or copy the URL and open it in [Google Colab](https://colab.research.google.com/).
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/stark-pdf-assistant.git
+   cd stark-pdf-assistant
+   ```
 
-2. **Configure the Environment:**
-   - In Colab, go to **Runtime > Change runtime type** and select **GPU**.
-   - Execute the initial cells to install all necessary dependencies automatically.
+2. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-3. **Execute the Notebook:**
-   - Run each cell sequentially. The notebook is organized to build upon previous steps.
-   - Follow the on-screen instructions for any additional inputs or parameter configurations.
+3. Create a `.env` file with your configuration:
+   ```
+   BOT_TOKEN=your_telegram_bot_token
+   ADMIN_USER_IDS=123456789,987654321
+   ```
 
-4. **Review the Results:**
-   - Monitor the output for any errors during execution.
-   - The final cells will display outputs such as the retrieved documents and the generated response from the model.
+4. Make sure Ollama is installed and running with the required models:
+   ```bash
+   ollama pull llama3.1:8b
+   ```
 
-## Repository Structure
+5. Create the necessary directories:
+   ```bash
+   mkdir -p data vector_db metadata
+   ```
 
-- **RAG_Reranking_LLAMA.ipynb:** Notebook demonstrating the RAG work flow using the LLAMA model.
-- **QLoRA.ipynb:** Notebook focused on fine-tuning techniques on supervised learning text summarization.
-- **README.md:** This file, providing an overview and guidance for the repository.
+## Usage
 
-## RAG Work Flow
+### Starting the Bot
 
-The Retrieval-Augmented Generation (RAG) process is divided into two main modules:
+```bash
+python src/main.py
+```
 
-1. **Retrieval Module**
-   - **Input:** A user’s query.
-   - **Process:** Searches an external knowledge base (using tools like FAISS or ChromaDB) to find documents relevant to the query.
-   - **Output:** A set of context documents that support the query.
+### Bot Commands
 
-2. **Generation Module**
-   - **Input:** The original query combined with the retrieved context.
-   - **Process:** The enriched input is fed into a language model (such as LLAMA or GPT) to generate a comprehensive and context-aware answer.
-   - **Output:** The final generated response, leveraging both the model’s knowledge and the external context.
+- `/start` - Start the bot
+- `/help` - Show help message
+- `/reset` - Reset your chat history
+- `/documents` - List available PDF documents
 
-## Fine-tuning
+### Admin Commands
 
-This repository also explores fine-tuning strategies to adapt large language models for specific tasks. One key approach featured is QLoRA (Quantized Low-Rank Adaptation), which:
-- **Reduces Memory Footprint:** Utilizes quantization (e.g., 4-bit) to minimize resource usage.
-- **Maintains Performance:** Achieves competitive performance while requiring fewer computational resources.
-- **Adapts Efficiently:** Focuses on low-rank adaptations to fine-tune models without extensive retraining of all parameters.
+- `/addpdf` - Upload a new PDF document - **coming soon**
+- `/structure <doc_id>` - View the hierarchical structure of a document - **coming soon**
 
-## Future Work
+### Typical Workflow
 
-Planned future enhancements include:
-- Developing additional notebooks and scripts to support running the RAG pipeline on local environments.
-- Integrating further evaluation metrics and optimization techniques to improve both RAG and fine-tuning performance.
+1. Admin uploads PDF documents using the `/addpdf` command
+2. Users ask questions about the documents
+3. The bot retrieves relevant sections and answers with precise references
+4. Users can reset their chat history with `/reset`
 
-## Author
+## How It Works
 
-LLM-Engineering is maintained by [Hung369](https://github.com/Hung369). For issues, suggestions, or contributions, please open an issue in the repository or reach out directly via GitHub.
+### Document Processing
+
+1. PDF documents are loaded and split into hierarchical chunks:
+   - Pages → Sections → Chunks
+2. Each chunk is embedded using the LLaMA model via Ollama
+3. Embeddings are stored in a FAISS vector database
+
+### Query Processing
+
+1. User's query is enhanced with historical context
+2. System retrieves relevant document chunks using hierarchical search
+3. Chunks are reranked based on relevance and hierarchy level
+4. Contextually relevant sections are assembled into a prompt
+5. LLaMA model generates a response with document references
+
+### Fallback Mechanisms
+
+If vector embeddings fail, the system falls back to:
+1. Keyword-based search
+2. Simple BM25 reranking
+3. Regular chat without document context
+
+## Customization
+
+### System Prompt
+
+You can customize the system prompt in `main.py`:
+
+```python
+SYSTEM_PROMPT = """You are Stark, an AI assistant specialized in answering questions about PDF documents.
+You respond only in English with clear, concise replies and always cite the specific parts of documents 
+when providing information.
+
+The following context comes from PDF documents:
+
+{context}
+
+When answering, mention the document name, page number, and section when relevant."""
+```
+
+### Model Selection
+
+You can change the LLaMA model in `Stark.py`:
+
+```python
+def __init__(
+    self, 
+    model_name: str = "llama3.1:8b", 
+    embedding_model: str = "llama3.1:8b",
+    # other parameters...
+):
+```
+
+## Directory Structure
+
+- `src/` - Source code
+  - `Stark.py` - Core RAG engine
+  - `main.py` - Telegram bot interface
+- `data/` - PDF documents storage
+- `vector_db/` - FAISS vector database
+- `metadata/` - Document hierarchy information
+
+## Troubleshooting
+
+### Common Issues
+
+- **Embedding Errors**: Check that Ollama is running and the specified model is available
+- **PDF Processing Fails**: Ensure the PDF is not password-protected and is text-based (not scanned images)
+- **Out of Memory**: Try using a smaller model or reducing chunk sizes in `Stark.py`
+
+### Logs
+
+Check `bot.log` for detailed information about any errors.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+
+## Acknowledgements
+
+- [LangChain](https://github.com/hwchase17/langchain) for document processing utilities
+- [FAISS](https://github.com/facebookresearch/faiss) for vector similarity search
+- [Ollama](https://github.com/jmorganca/ollama) for local LLM inference
+- [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot) for Telegram integration
