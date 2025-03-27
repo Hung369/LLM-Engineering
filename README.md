@@ -147,11 +147,11 @@ def __init__(
 ## Directory Structure
 
 - `src/` - Source code
-  - `Stark.py` - Core RAG engine
-  - `main.py` - Telegram bot interface
-- `data/` - PDF documents storage
-- `vector_db/` - FAISS vector database
-- `metadata/` - Document hierarchy information
+   - `Stark.py` - Core RAG engine
+   - `main.py` - Telegram bot interface
+   - `data/` - PDF documents storage
+   - `vector_db/` - FAISS vector database
+   - `metadata/` - Document hierarchy information
 
 ## Troubleshooting
 
