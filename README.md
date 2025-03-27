@@ -50,7 +50,6 @@ The system consists of two main components:
 3. Create a `.env` file with your configuration:
    ```
    BOT_TOKEN=your_telegram_bot_token
-   ADMIN_USER_IDS=123456789,987654321
    ```
 
 4. Make sure Ollama is installed and running with the required models:
