@@ -23,9 +23,9 @@ The system consists of two main components:
    
 2. **Telegram Bot (main.py)**: User interface that provides:
    - Command handling for document management
-   - Conversation flows for PDF uploads
-   - User session management
-   - Admin privilege controls
+   - Conversation flows for PDF uploaded in data folder
+   - User session management - **coming soon**
+   - Admin privilege controls - **coming soon**
 
 ## Requirements
 
